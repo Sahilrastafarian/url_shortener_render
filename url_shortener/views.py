@@ -4,14 +4,14 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-#from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import redirect
 from .models import short_url
 import uuid
 import json
 
 
-# @csrf_exempt
+@csrf_exempt
 def create_new_short_url(request):
     if request.method == 'GET':
         template = loader.get_template('index.html')
