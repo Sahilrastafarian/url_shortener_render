@@ -22,6 +22,20 @@ def create_new_short_url(request):
         client_url = data['url']
 
         # check if the user entered the absolute url or not
+        try:
+            if client_url[:8] != "https://":
+                if client_url[:7] != "http://":
+                    res = {"error": "url should start with https:// or http://"}
+                    response = JsonResponse(res, status = 200)
+                    return response
+
+        except Exception as e:
+            # in case of exception generate an error to send to client
+            res = {"error": "some thing went wrong on our end please try again"}
+            response =  JsonResponse(res, status = 404)
+            return response
+        
+        # replace start so that custom url can be sent to user
         client_url = client_url.replace("https://","")
         client_url = client_url.replace("http://","")
 
@@ -50,7 +64,7 @@ def create_new_short_url(request):
 
                 # if new generated id is also taken raise an exception
                 if short_url.objects.filter(unique_url=unique_short_url):
-                    raise Exception("will have to try again")
+                    raise Exception("error generating url please try again")
 
             # save the client url and the unique url both into the database
             data_for_db = short_url()
@@ -64,7 +78,7 @@ def create_new_short_url(request):
 
         except Exception as e:
             # in case of exception generate an error to send to client
-            res = {"error": "there was an error please try again"}
+            res = {"error": e}
             response =  JsonResponse(res, status = 404)
             
         
