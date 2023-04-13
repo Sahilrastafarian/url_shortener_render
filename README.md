@@ -12,3 +12,30 @@ On successful shortening of the url the shortened url is sent back to the user a
 this generated url the request comes on the server which extracts the last 6 characters of url and looks up the url to which this
 unique 6 character key maps to and then server sends this url to clients browser with a status code of 301 to redirect him to the 
 original url which was shortened at the start.
+
+
+# the urls generated while testing 
+
+tested url
+https://google.com
+
+generated url
+https://sahil-url-shortener.onrender.com/ref/f04f18
+
+tested url
+https://th.bing.com/th/id/R.d8aedc575ac32a253b5be5d25a52d598?rik=aLHj1W5emKA1Iw&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f02%2f1573618audi-car-images.jpg&ehk=EF0VdTd7DJoHQviRvsvMwZOxXN8XnzPldXhNrNT4Rl0%3d&risl=&pid=ImgRaw&r=0
+
+generated url
+https://sahil-url-shortener.onrender.com/ref/fa0d0b
+
+tested url
+https://www.bing.com/images/search?view=detailV2&ccid=vf11XywU&id=265684F6F586EFA8AB992FE328E3D3DE02DED174&thid=OIP.vf11XywUrdCTiM2RtALitAHaFU&mediaurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.bdfd755f2c14add09388cd91b402e2b4%3frik%3ddNHeAt7T4yjjLw%26riu%3dhttp%253a%252f%252f2.bp.blogspot.com%252f-9MIwQEstND0%252fT45QOs9L-LI%252fAAAAAAAADh0%252fPEDSFotZ3mg%252fs1600%252faudi%252bcars%252bhd%252bwallpapers.jpg%26ehk%3dyLAF11FoTj3%252b9QkNrLBjTV9eU%252fM6kolcZnt%252ffIM9qJ4%253d%26risl%3d%26pid%3dImgRaw%26r%3d0&exph=920&expw=1280&q=images+Car&simid=608005329070745941&FORM=IRPRST&ck=091A45B1B45A568EABE2EB5204DA0F4E&selectedIndex=13
+
+generated url
+https://sahil-url-shortener.onrender.com/ref/481c04
+
+tested url
+https://www.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg
+
+generated url
+https://sahil-url-shortener.onrender.com/ref/1f137d
