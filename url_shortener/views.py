@@ -1,14 +1,13 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
-# from django.shortcuts import redirect
 from .models import short_url
 import uuid
 import json
+
+# Create your views here.
 
 
 @csrf_exempt
@@ -35,10 +34,7 @@ def create_new_short_url(request):
             existent_url = current_url + "ref/" + data.unique_url
             res = {"already_exists": "url already shortened","existing_url": existent_url}
             response =  JsonResponse(res, status = 200)
-            # response["Access-Control-Allow-Origin"] = "*"
-            # response["Access-Control-Allow-Methods"] = "GET, OPTIONS, POST"
-            # response["Access-Control-Max-Age"] = "1000"
-            # response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+            
             return response
         try:
 
@@ -47,6 +43,14 @@ def create_new_short_url(request):
             unique_short_url = uuid.uuid4().urn
             unique_short_url = unique_short_url[9:15]
 
+            # check if unique generated url is already taken
+            if short_url.objects.filter(unique_url=unique_short_url):
+                unique_short_url = uuid.uuid4().urn
+                unique_short_url = unique_short_url[9:15]
+
+                # if new generated id is also taken raise an exception
+                if short_url.objects.filter(unique_url=unique_short_url):
+                    raise Exception("will have to try again")
 
             # save the client url and the unique url both into the database
             data_for_db = short_url()
@@ -54,20 +58,15 @@ def create_new_short_url(request):
             data_for_db.unique_url = unique_short_url
             data_for_db.save()
 
+            # add new shortened url to the response and send to client
             res = {"short_url": current_url + 'ref/' + unique_short_url}
             response =  JsonResponse(res, status = 200)
-            # response["Access-Control-Allow-Origin"] = "*"
-            # response["Access-Control-Allow-Methods"] = "GET, OPTIONS, POST"
-            # response["Access-Control-Max-Age"] = "1000"
-            # response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
 
         except Exception as e:
+            # in case of exception generate an error to send to client
             res = {"error": "there was an error please try again"}
             response =  JsonResponse(res, status = 404)
-            # response["Access-Control-Allow-Origin"] = "*"
-            # response["Access-Control-Allow-Methods"] = "GET, OPTIONS, POST"
-            # response["Access-Control-Max-Age"] = "1000"
-            # response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+            
         
         return response
     
@@ -80,6 +79,7 @@ def redirect_user(request, unique_identifier_to_url):
 
         # add http:// to the url as the url needs to be absolute for redirection
         return HttpResponseRedirect("http://" + data.url)
+    
     except Exception as e:
         # get absolute url to use to redirect user to the home page
         link_to_url_shortener = request.build_absolute_uri()
